@@ -5,13 +5,13 @@
 # Using DOM
 import urllib
 import xml.dom.minidom
- 
+
 def eztv_miner():
   try:
     stream = urllib.urlopen('http://www.ezrss.it/feed/')
-  except IOError:
+    doc = xml.dom.minidom.parse(stream)
+  except:
     raise StopIteration
-  doc = xml.dom.minidom.parse(stream)
 
   for item in doc.getElementsByTagName("item"):
     title, link, show = "", "", ""
@@ -77,7 +77,7 @@ def argenteam_miner():
   parser.setContentHandler(handler)
   try:
     stream = urllib.urlopen('http://www.argenteam.net/rss/tvseries_torrents.xml')
-  except IOError:
+  except:
     raise StopIteration
 
   parser.parse(stream)

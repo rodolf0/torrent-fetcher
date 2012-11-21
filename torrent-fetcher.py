@@ -3,12 +3,12 @@
 # http://oreilly.com/catalog/pythonxml/chapter/ch01.html
 
 # Using DOM
-import urllib
+from urllib.request import urlopen
 import xml.dom.minidom
 
 def eztv_miner():
   try:
-    stream = urllib.urlopen('http://www.ezrss.it/feed/')
+    stream = urlopen('http://www.ezrss.it/feed/')
     doc = xml.dom.minidom.parse(stream)
   except:
     raise StopIteration
@@ -27,8 +27,7 @@ def eztv_miner():
     for title_node in item.getElementsByTagName("description"):
       for elem_node in title_node.childNodes:
         if elem_node.nodeType == xml.dom.minidom.Node.CDATA_SECTION_NODE:
-          show = filter(lambda el: el.startswith("Show Name:"),
-                        elem_node.data.split(";")).pop()
+          show = [e for e in elem_node.data.split(";") if e.startswith("Show Name:")].pop()
           show = show.replace("Show Name: ", "")
       if show: break
 
@@ -76,7 +75,7 @@ def argenteam_miner():
   handler = ArgenteamMiner()
   parser.setContentHandler(handler)
   try:
-    stream = urllib.urlopen('http://www.argenteam.net/rss/tvseries_torrents.xml')
+    stream = urlopen('http://www.argenteam.net/rss/tvseries_torrents.xml')
   except:
     raise StopIteration
 
@@ -92,10 +91,10 @@ if __name__ == '__main__':
   import re
 
   for torrent in argenteam_miner():
-    if torrent["title"].startswith(myConfig.argenteam_titles):
-      print torrent["title"] + '^' + torrent["link"]
+    #if torrent["title"].startswith(myConfig.argenteam_titles):
+    print(torrent["title"] + '^' + torrent["link"])
 
-  for torrent in eztv_miner():
-    for eztitle in myConfig.eztv_titles:
-      if re.search(eztitle, torrent["title"]) and not re.search("720", torrent["title"]):
-        print torrent["title"] + '^' + torrent["link"]
+  #for torrent in eztv_miner():
+    #for eztitle in myConfig.eztv_titles:
+      #if re.search(eztitle, torrent["title"]) and not re.search("720", torrent["title"]):
+        #print(torrent["title"] + '^' + torrent["link"])

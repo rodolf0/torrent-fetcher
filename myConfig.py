@@ -2,9 +2,7 @@
 
 argenteam_titles = (
   'HowIMetYourMother',
-  'TheBigBangTheory',
+  'BigBangTheory',
 )
 
-eztv_titles = (
-  'White Collar',
-)
+eztv_titles = ()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # http://oreilly.com/catalog/pythonxml/chapter/ch01.html
 
@@ -61,13 +61,14 @@ class ArgenteamMiner(xml.sax.handler.ContentHandler):
       self.state[name] = False
     if name == "item":
       self.mapping[self.title] = self.link
+      self.link = ""
 
   def characters(self, data):
     if self.state["item"]:
       if self.state["title"]:
         self.title = data
       elif self.state["link"]:
-        self.link = data
+        self.link += data
 
 
 def argenteam_miner():

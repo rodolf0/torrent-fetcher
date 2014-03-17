@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from urllib.request import urlopen
 import xml.sax
@@ -52,10 +52,14 @@ if __name__ == '__main__':
   import sys
   import re
   torrent = sys.argv[1]
-  base, episode, rest = re.split("([sS][0-9]{2}[eE][0-9]{2}|[0-9]{1,2}x[0-9]{1,2})",
-                                 torrent, maxsplit=1)
-  if 'x' in episode:
-    episode = "S{:02d}E{:02d}".format(*[int(x) for x in episode.split('x')])
+  try:
+    base, episode, rest = re.split(
+        "([sS][0-9]{2}[eE][0-9]{2}|[0-9]{1,2}x[0-9]{1,2})", torrent, maxsplit=1)
+  except ValueError:
+    sys.exit(1)
+  else:
+    if 'x' in episode:
+      episode = "S{:02d}E{:02d}".format(*[int(x) for x in episode.split('x')])
 
   searchstr = re.sub("\.", "+", base) + episode
 

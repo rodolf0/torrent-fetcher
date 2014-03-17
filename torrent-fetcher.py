@@ -92,10 +92,10 @@ if __name__ == '__main__':
   import re
 
   for torrent in argenteam_miner():
-    #if torrent["title"].startswith(myConfig.argenteam_titles):
-    print(torrent["title"] + '^' + torrent["link"])
+    if torrent["title"].startswith(myConfig.argenteam_titles):
+      print(torrent["title"] + '^' + torrent["link"])
 
-  #for torrent in eztv_miner():
-    #for eztitle in myConfig.eztv_titles:
-      #if re.search(eztitle, torrent["title"]) and not re.search("720", torrent["title"]):
-        #print(torrent["title"] + '^' + torrent["link"])
+  for torrent in eztv_miner():
+    for eztitle in myConfig.eztv_titles:
+      if re.search(eztitle, torrent["title"]) and not re.search("720", torrent["title"]):
+        print(torrent["title"] + '^' + torrent["link"])
